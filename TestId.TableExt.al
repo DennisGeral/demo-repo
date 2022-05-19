@@ -33,8 +33,11 @@ tableextension 50103 "Cust Ext Table" extends Customer
                     ValidateID(temp);
                     AddSlashes(temp);
                 end
-                else
-                    Message('Slashes are present');
+                else begin
+                    RemoveSlashes(temp);
+                    ValidateID(temp);
+                    AddSlashes(temp);
+                end;
 
 
 
@@ -47,6 +50,15 @@ tableextension 50103 "Cust Ext Table" extends Customer
 
     var
         myInt: Integer;
+
+    local procedure RemoveSlashes(var temp: Text)
+    var
+        i: Integer;
+    begin
+        temp := Rec.TestID.ToLower();
+        temp := DelChr(temp, '=', '-');
+        Rec.TestID := temp;
+    end;
 
     local procedure AddSlashes(var temp: Text)
     var
